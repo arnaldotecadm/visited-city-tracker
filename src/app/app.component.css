@@ -1,0 +1,24 @@
+svg {
+  pointer-events: all;
+}
+
+.lista-cidades {
+  position: absolute;
+  width: 350px;
+  background-color: #302dec73;
+  border-radius: 10px;
+  padding: 10px;
+  right: 1%;
+  top: 5%;
+}
+
+.lista-cidades .head {
+  margin-bottom: 5%;
+}
+
+.one-line {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+}
