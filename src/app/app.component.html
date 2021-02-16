@@ -1,3 +1,4 @@
+<router-outlet></router-outlet>
 <mat-checkbox
   class="example-margin"
   [(ngModel)]="modoDesenv"
@@ -22,7 +23,7 @@
   Nomear Cidade
 </button>
 
-{{ itemSelecionado?.nome }} - {{ itemSelecionado?.d }}
+{{ itemSelecionado?.nome }} - {{ itemSelecionado?.id }}
 <div class="lista-cidades">
   <div class="head">
     Cidades Visitadas => {{ cidadeVisitadaLista.length }} /
@@ -30,7 +31,7 @@
   </div>
   <div>
     <div *ngFor="let item of cidadeVisitadaLista" class="one-line">
-      {{ item.nome ? item.nome : item.d }}
+      {{ item.nome ? item.nome : item.id }}
     </div>
   </div>
 </div>
@@ -49,29 +50,37 @@
   [style.top.px]="menuY"
 ></div>
 
-<svg
-  pointer-events="none"
-  class="leaflet-zoom-animated"
-  viewBox="-100 0 900 500"
-  style="transform: translate3d(-89px, -100px, 0px)"
->
-  <g>
-    <path
-      *ngFor="let p of pathList"
-      [attr.class]="p.class"
-      [attr.stroke]="p.stroke"
-      [attr.stroke-opacity]="p['stroke-opacity']"
-      [attr.stroke-width]="p['stroke-width']"
-      [attr.stroke-linecap]="p['stroke-linecap']"
-      [attr.stroke-linejoin]="p['stroke-linejoin']"
-      [attr.stroke-dasharray]="p['stroke-dasharray']"
-      [attr.fill]="p.selecionado ? '#A9A9A9' : p.fill"
-      [attr.fill-opacity]="p['fill-opacity']"
-      [attr.fill-rule]="p['fill-rule']"
-      [attr.d]="p.d"
-      (click)="itemClicado(p)"
-    >
-      <title>{{ p.d }}</title>
-    </path>
-  </g>
-</svg>
+<div class="mapa_desenhado">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    version="1.2"
+    baseProfile="tiny"
+    width="1080"
+    height="1080"
+    viewBox="-53.8371 25.9768 5.463499999999996 3.3782999999999994"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class="centered"
+  >
+    <g transform="scale(0.0001,-0.0001)">
+      <path
+        *ngFor="let p of pathList"
+        [attr.class]="p.class"
+        [attr.stroke]="p.stroke"
+        [attr.stroke-opacity]="p['stroke-opacity']"
+        [attr.stroke-width]="p['stroke-width']"
+        [attr.stroke-linecap]="p['stroke-linecap']"
+        [attr.stroke-linejoin]="p['stroke-linejoin']"
+        [attr.stroke-dasharray]="p['stroke-dasharray']"
+        [attr.fill]="p.selecionado ? '#A9A9A9' : p.fill"
+        [attr.fill-opacity]="p['fill-opacity']"
+        [attr.fill-rule]="p['fill-rule']"
+        [attr.d]="p.d"
+        [attr.id]="p.id"
+        (click)="itemClicado(p)"
+      >
+        <title>{{ p.id }}</title>
+      </path>
+    </g>
+  </svg>
+</div>

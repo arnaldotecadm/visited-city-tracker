@@ -11,6 +11,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { FormsModule } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MapaModule } from "./testes/mapa/mapa.module";
 
 @NgModule({
   declarations: [AppComponent, DialogOverviewExampleDialog],
@@ -25,6 +26,7 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
     FormsModule,
     MatFormFieldModule,
     MatCheckboxModule,
+    MapaModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

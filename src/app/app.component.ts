@@ -112,6 +112,9 @@ export class AppComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+      if (result == -1) {
+        return;
+      }
       this.itemSelecionado.nome = result;
     });
   }
@@ -129,5 +132,9 @@ export class DialogOverviewExampleDialog {
 
   confirm(data): void {
     this.dialogRef.close(data);
+  }
+
+  cancel() {
+    this.dialogRef.close(-1);
   }
 }
