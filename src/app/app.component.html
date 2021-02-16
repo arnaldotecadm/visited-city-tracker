@@ -9,8 +9,17 @@
   color="primary"
   style="z-index: 9999; position: absolute; margin-top: 3%; margin-left: 1%"
   (click)="marcarComoVisitado()"
+  class="col-md-2"
 >
   Marcar como Visitado
+</button>
+<button
+  mat-raised-button
+  color="primary"
+  (click)="openDialog()"
+  style="z-index: 9999; position: absolute; margin-top: 5%; margin-left: 1%"
+>
+  Nomear Cidade
 </button>
 
 {{ itemSelecionado?.nome }} - {{ itemSelecionado?.d }}
@@ -26,22 +35,9 @@
   </div>
 </div>
 
-<div class="lista-cidades" style="margin-top: 100px" *ngIf="false">
-  <div class="head">
-    Cidades Visitadas => {{ visitedCityList.length }} / {{ pathList.length }}
-  </div>
-  <div>
-    <div *ngFor="let item of visitedCityList" class="one-line">
-      {{ item.nome ? item.nome : item.id }}
-    </div>
-  </div>
-</div>
-
 <mat-menu #contextmenu>
   <div>
-    <button mat-menu-item (click)="toggleSelected()">
-      Marcar/Desmarcar Cidade
-    </button>
+    <button mat-menu-item>Marcar/Desmarcar Cidade</button>
 
     <button mat-menu-item (click)="openDialog()">Nomear Cidade</button>
   </div>
