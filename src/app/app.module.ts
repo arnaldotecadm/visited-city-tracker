@@ -12,6 +12,8 @@ import { FormsModule } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MapaModule } from "./testes/mapa/mapa.module";
+import { HttpClientModule } from "@angular/common/http";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 
 @NgModule({
   declarations: [AppComponent, DialogOverviewExampleDialog],
@@ -27,6 +29,8 @@ import { MapaModule } from "./testes/mapa/mapa.module";
     MatFormFieldModule,
     MatCheckboxModule,
     MapaModule,
+    HttpClientModule,
+    MatProgressBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

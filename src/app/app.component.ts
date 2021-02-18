@@ -4,6 +4,7 @@ import {
   Component,
   HostListener,
   Inject,
+  OnInit,
   QueryList,
   ViewChild,
   ViewChildren,
@@ -16,6 +17,7 @@ import {
 } from "@angular/material/dialog";
 import { Observable, of } from "rxjs";
 import { ListaPathCidadeSantaCatarina } from "./lista-cidades-santa-catarina";
+import { HttpClient } from "@angular/common/http";
 
 export interface DialogData {
   animal: string;
@@ -27,7 +29,7 @@ export interface DialogData {
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   @ViewChild(MatMenuTrigger, { static: false }) menu: MatMenuTrigger;
   @ViewChildren("path") path: QueryList<any>;
 
@@ -48,11 +50,14 @@ export class AppComponent {
   pathList = [];
   lastClick = 0;
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog, public http: HttpClient) {
     let listaPath = new ListaPathCidadeSantaCatarina();
     this.pathList = listaPath.pathList;
   }
 
+  ngOnInit() {
+    this.buscarNomeCidades();
+  }
   @HostListener("click", ["$event"])
   clickEvent(event) {
     const currentTime = new Date().getTime();
@@ -117,6 +122,20 @@ export class AppComponent {
       }
       this.itemSelecionado.nome = result;
     });
+  }
+
+  buscarNomeCidades() {
+    this.pathList.forEach((item) => {
+      this.consultaWebService(item.id).subscribe((data: any) => {
+        item.nome = data.nome;
+      });
+    });
+  }
+
+  consultaWebService(codigo) {
+    return this.http.get(
+      "https://servicodados.ibge.gov.br/api/v1/localidades/municipios/" + codigo
+    );
   }
 }
 
