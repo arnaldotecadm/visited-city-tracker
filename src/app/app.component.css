@@ -9,13 +9,15 @@ svg {
   text-align: center;
   font-weight: 500;
 }
-#progressbar {
+.progressbar {
   background-color: black;
   border-radius: 13px;
   padding: 3px;
+  width: 99%;
+  margin-top: 3px;
 }
 
-#progressbar > div {
+.progressbar > div {
   background-color: orange;
   height: 20px;
   border-radius: 10px;
@@ -34,6 +36,10 @@ svg {
   float: right;
 }
 
+tr.linha-coluna:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
 .lista-cidades .head {
   margin-bottom: 5%;
 }
@@ -41,6 +47,10 @@ svg {
 .lista-cidades .body {
   overflow: auto;
   height: 450px;
+}
+.lista-cidades .body table {
+  margin-right: 0px;
+  width: 100%;
 }
 
 .one-line {
@@ -60,6 +70,22 @@ svg {
   background-color: #0000ff6b;
   padding: 18px;
   border-radius: 15px;
-  width: 500px;
-  margin-top: 1%;
+  width: 550px;
+  margin-top: 3px;
+}
+
+.cabecalho-head {
+  font-weight: 500;
+  font-size: 25px;
+  text-align: center;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }

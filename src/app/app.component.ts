@@ -1,6 +1,5 @@
+import { HttpClient } from "@angular/common/http";
 import {
-  AfterViewChecked,
-  AfterViewInit,
   Component,
   HostListener,
   Inject,
@@ -9,15 +8,15 @@ import {
   ViewChild,
   ViewChildren,
 } from "@angular/core";
-import { MatMenuTrigger } from "@angular/material/menu";
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from "@angular/material/dialog";
-import { Observable, of } from "rxjs";
+import { MatMenuTrigger } from "@angular/material/menu";
+import { MatSort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
 import { ListaPathCidadeSantaCatarina } from "./lista-cidades-santa-catarina";
-import { HttpClient } from "@angular/common/http";
 
 export interface DialogData {
   animal: string;
@@ -36,7 +35,8 @@ export class AppComponent implements OnInit {
   ultimoItemSelecionado;
   itemSelecionado;
   cidadeVisitadaLista = [];
-
+  dataSource;
+  @ViewChild(MatSort) sort: MatSort;
   animal: string;
   name: string;
   menuX: number = 0;
@@ -49,6 +49,7 @@ export class AppComponent implements OnInit {
   modoDesenv = false;
   pathList = [];
   lastClick = 0;
+  displayedColumns: string[] = ["nome"];
 
   constructor(public dialog: MatDialog, public http: HttpClient) {
     let listaPath = new ListaPathCidadeSantaCatarina();
@@ -57,9 +58,14 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.buscarNomeCidades();
+    this.dataSource = new MatTableDataSource();
+    this.dataSource.sort = this.sort;
   }
   @HostListener("click", ["$event"])
   clickEvent(event) {
+    if (event.target.nodeName != "path") {
+      return;
+    }
     const currentTime = new Date().getTime();
     const ultimoClick = currentTime - this.lastClick;
 
@@ -92,6 +98,8 @@ export class AppComponent implements OnInit {
       this.cidadeVisitadaLista.push(this.itemSelecionado);
       this.itemSelecionado.fill = rgb;
     }
+
+    this.dataSource = new MatTableDataSource(this.cidadeVisitadaLista);
   }
 
   itemClicado(item) {

@@ -1,19 +1,19 @@
-import { BrowserModule } from "@angular/platform-browser";
+import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
-
+import { FormsModule } from "@angular/forms";
+import { MatButtonModule } from "@angular/material/button";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatIconModule } from "@angular/material/icon";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { MatTableModule } from "@angular/material/table";
+import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent, DialogOverviewExampleDialog } from "./app.component";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MatMenuModule } from "@angular/material/menu";
-import { MatIconModule } from "@angular/material/icon";
-import { MatDialogModule } from "@angular/material/dialog";
-import { MatButtonModule } from "@angular/material/button";
-import { FormsModule } from "@angular/forms";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MapaModule } from "./testes/mapa/mapa.module";
-import { HttpClientModule } from "@angular/common/http";
-import { MatProgressBarModule } from "@angular/material/progress-bar";
 
 @NgModule({
   declarations: [AppComponent, DialogOverviewExampleDialog],
@@ -31,6 +31,7 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
     MapaModule,
     HttpClientModule,
     MatProgressBarModule,
+    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
