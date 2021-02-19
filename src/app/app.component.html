@@ -11,6 +11,18 @@
   ></div>
 </div>
 
+<div class="limpar_cidades_visitadas">
+  <div>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="limparCidadesVisitadas()"
+    >
+      Limpar Cidades Visitadas
+    </button>
+  </div>
+</div>
+
 <div class="cabecalho centered">
   <div class="cabecalho-head">
     {{ itemSelecionado?.nome }}
@@ -50,12 +62,18 @@
             {{ element.nome }}
           </td>
         </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns"
+          class="noselect"
+        ></tr>
 
         <tr
           mat-row
           *matRowDef="let row; columns: displayedColumns"
           class="linha-coluna noselect"
+          [class.selected]="row.id == selected?.id"
+          (click)="toggleSelecItemtable(row)"
         ></tr>
       </table>
     </div>
@@ -67,8 +85,8 @@
       version="1.2"
       baseProfile="tiny"
       width="1080"
-      height="1080"
-      viewBox="-53.8371 25.9768 5.463499999999996 4.5"
+      height="860"
+      viewBox="-53.8371 25.2768 5.463499999999996 4.5"
       stroke-linecap="round"
       stroke-linejoin="round"
       class="centered"

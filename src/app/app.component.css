@@ -4,7 +4,7 @@ svg {
 
 .label_progressbar {
   color: white;
-  position: absolute;
+  position: fixed;
   width: 100%;
   text-align: center;
   font-weight: 500;
@@ -34,9 +34,10 @@ svg {
   right: 1%;
   top: 5%;
   float: right;
+  margin-right: 1%;
 }
 
-tr.linha-coluna:not(.example-expanded-row):hover {
+tr.linha-coluna:not(.selected):hover {
   background: whitesmoke;
 }
 
@@ -74,6 +75,13 @@ tr.linha-coluna:not(.example-expanded-row):hover {
   margin-top: 3px;
 }
 
+.limpar_cidades_visitadas {
+  float: left;
+  width: 15%;
+  margin-left: 3%;
+  margin-top: 3px;
+}
+
 .cabecalho-head {
   font-weight: 500;
   font-size: 25px;
@@ -88,4 +96,8 @@ tr.linha-coluna:not(.example-expanded-row):hover {
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
+}
+
+.selected {
+  background-color: #9192f0;
 }

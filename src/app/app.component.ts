@@ -1,3 +1,4 @@
+import { Platform } from "@angular/cdk/platform";
 import { HttpClient } from "@angular/common/http";
 import {
   Component,
@@ -50,16 +51,60 @@ export class AppComponent implements OnInit {
   pathList = [];
   lastClick = 0;
   displayedColumns: string[] = ["nome"];
+  selected;
 
-  constructor(public dialog: MatDialog, public http: HttpClient) {
+  constructor(
+    public dialog: MatDialog,
+    public http: HttpClient,
+    public platform: Platform
+  ) {
     let listaPath = new ListaPathCidadeSantaCatarina();
     this.pathList = listaPath.pathList;
+    console.log(platform.ANDROID || platform.IOS);
   }
 
   ngOnInit() {
     this.buscarNomeCidades();
-    this.dataSource = new MatTableDataSource();
+    if (localStorage.getItem("cidades_visitadas")) {
+      this.cidadeVisitadaLista.push(
+        ...JSON.parse(localStorage.getItem("cidades_visitadas"))
+      );
+    }
+    this.dataSource = new MatTableDataSource(this.cidadeVisitadaLista);
     this.dataSource.sort = this.sort;
+    this.preecherCidadesVisitadasStorage();
+  }
+
+  toggleSelecItemtable(item) {
+    if (this.selected && item.id == this.selected.id) {
+      this.selected = null;
+    } else {
+      this.selected = item;
+    }
+  }
+
+  limparCidadesVisitadas() {
+    this.cidadeVisitadaLista.forEach((item) => {
+      let city = this.pathList.filter((pl) => pl.id == item.id)[0];
+      if (city) {
+        city.fill = "#FFF";
+      }
+    });
+    this.cidadeVisitadaLista = [];
+    localStorage.setItem(
+      "cidades_visitadas",
+      JSON.stringify(this.cidadeVisitadaLista)
+    );
+    this.dataSource = new MatTableDataSource(this.cidadeVisitadaLista);
+  }
+
+  preecherCidadesVisitadasStorage() {
+    this.cidadeVisitadaLista.forEach((item) => {
+      let city = this.pathList.filter((pl) => pl.id == item.id)[0];
+      if (city) {
+        city.fill = this.getRandomColor();
+      }
+    });
   }
   @HostListener("click", ["$event"])
   clickEvent(event) {
@@ -73,19 +118,23 @@ export class AppComponent implements OnInit {
       event.stopPropagation();
       this.marcarComoVisitado(this.ultimoItemSelecionado);
     }
+
     this.lastClick = currentTime;
+  }
+
+  getRandomColor(): string {
+    const randomBetween = (min, max) =>
+      min + Math.floor(Math.random() * (max - min + 1));
+    const r = randomBetween(0, 255);
+    const g = randomBetween(0, 255);
+    const b = randomBetween(0, 255);
+    return `rgb(${r},${g},${b})`;
   }
 
   marcarComoVisitado(item = null) {
     if (item) {
       this.itemSelecionado = item;
     }
-    const randomBetween = (min, max) =>
-      min + Math.floor(Math.random() * (max - min + 1));
-    const r = randomBetween(0, 255);
-    const g = randomBetween(0, 255);
-    const b = randomBetween(0, 255);
-    const rgb = `rgb(${r},${g},${b})`;
 
     if (
       this.cidadeVisitadaLista.filter((i) => i.d == this.itemSelecionado.d)
@@ -96,9 +145,12 @@ export class AppComponent implements OnInit {
       this.cidadeVisitadaLista.splice(index, 1);
     } else {
       this.cidadeVisitadaLista.push(this.itemSelecionado);
-      this.itemSelecionado.fill = rgb;
+      this.itemSelecionado.fill = this.getRandomColor();
     }
-
+    localStorage.setItem(
+      "cidades_visitadas",
+      JSON.stringify(this.cidadeVisitadaLista)
+    );
     this.dataSource = new MatTableDataSource(this.cidadeVisitadaLista);
   }
 

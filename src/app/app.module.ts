@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent, DialogOverviewExampleDialog } from "./app.component";
 import { MapaModule } from "./testes/mapa/mapa.module";
+import { PlatformModule } from "@angular/cdk/platform";
 
 @NgModule({
   declarations: [AppComponent, DialogOverviewExampleDialog],
@@ -32,6 +33,7 @@ import { MapaModule } from "./testes/mapa/mapa.module";
     HttpClientModule,
     MatProgressBarModule,
     MatTableModule,
+    PlatformModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
