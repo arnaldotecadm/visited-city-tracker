@@ -15,6 +15,7 @@ import {
   MAT_DIALOG_DATA,
 } from "@angular/material/dialog";
 import { MatMenuTrigger } from "@angular/material/menu";
+import { MatAccordion } from "@angular/material/expansion";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { ListaPathCidadeSantaCatarina } from "./lista-cidades-santa-catarina";
@@ -52,6 +53,7 @@ export class AppComponent implements OnInit {
   lastClick = 0;
   displayedColumns: string[] = ["nome"];
   selected;
+  @ViewChild(MatAccordion) accordion: MatAccordion;
 
   constructor(
     public dialog: MatDialog,

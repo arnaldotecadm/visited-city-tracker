@@ -76,16 +76,39 @@ tr.linha-coluna:not(.selected):hover {
 }
 
 .limpar_cidades_visitadas {
-  float: left;
+  float: right;
   width: 15%;
-  margin-left: 3%;
   margin-top: 3px;
+}
+
+.acoes_cidades {
+  position: absolute;
+  left: 1%;
+  top: 35px;
+  width: 400px;
 }
 
 .cabecalho-head {
   font-weight: 500;
   font-size: 25px;
   text-align: center;
+}
+
+.titulo-menu-acoes {
+  background-color: white;
+  padding: 10px;
+  color: blue;
+  font-weight: 600;
+  font-size: 21px;
+}
+
+.example-action-buttons button {
+  width: 100%;
+  text-align: start;
+}
+
+.example-action-buttons button span {
+  margin-left: 1%;
 }
 
 .noselect {
@@ -100,4 +123,22 @@ tr.linha-coluna:not(.selected):hover {
 
 .selected {
   background-color: #9192f0;
+}
+
+.example-action-buttons {
+  padding-bottom: 20px;
+}
+
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.example-headers-align .mat-form-field + .mat-form-field {
+  margin-left: 8px;
 }

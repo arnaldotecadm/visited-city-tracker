@@ -1,5 +1,66 @@
 <router-outlet></router-outlet>
 
+<mat-accordion
+  class="acoes_cidades example-headers-align"
+  multi
+  *ngIf="selected"
+>
+  <div class="titulo-menu-acoes">{{ selected?.nome }}</div>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title> O que fazer </mat-panel-title>
+      <mat-panel-description>
+        Pontos Turísticos
+        <mat-icon>done_all</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Onde Ficar </mat-panel-title>
+      <mat-panel-description>
+        Hospedagem
+        <mat-icon>done_all</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Sugestões </mat-panel-title>
+      <mat-panel-description>
+        Opções de atrações
+        <mat-icon>done_all</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Meu Espaço </mat-panel-title>
+      <mat-panel-description>
+        Aconteceu nesta viagem
+        <mat-icon>done_all</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="example-action-buttons">
+      <button mat-button>
+        <mat-icon>done_all</mat-icon><span>Registrar Momento</span>
+      </button>
+      <button mat-button>
+        <mat-icon>done_all</mat-icon><span>Fotos</span>
+      </button>
+      <button mat-button>
+        <mat-icon>done_all</mat-icon><span>Anotações</span>
+      </button>
+      <button mat-button>
+        <mat-icon>done_all</mat-icon><span>Meus Gastos</span>
+      </button>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+
 <div class="progressbar centered">
   <span class="label_progressbar"
     >Progresso de Cidades Visitadas

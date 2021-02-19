@@ -15,6 +15,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent, DialogOverviewExampleDialog } from "./app.component";
 import { MapaModule } from "./testes/mapa/mapa.module";
 import { PlatformModule } from "@angular/cdk/platform";
+import { MatExpansionModule } from "@angular/material/expansion";
 
 @NgModule({
   declarations: [AppComponent, DialogOverviewExampleDialog],
@@ -34,6 +35,7 @@ import { PlatformModule } from "@angular/cdk/platform";
     MatProgressBarModule,
     MatTableModule,
     PlatformModule,
+    MatExpansionModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
