@@ -3,29 +3,30 @@ import { HttpClient } from "@angular/common/http";
 import {
   Component,
   HostListener,
+  Inject,
   OnInit,
   QueryList,
   ViewChild,
   ViewChildren,
 } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from "@angular/material/dialog";
 import { MatAccordion } from "@angular/material/expansion";
 import { MatMenuTrigger } from "@angular/material/menu";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { ListaPathCidadeSantaCatarina } from "./lista-cidades-santa-catarina";
-
-export interface DialogData {
-  animal: string;
-  nome: string;
-}
+import { DialogData } from "src/app/app.component";
+import { ListaPathCidadeSantaCatarina } from "src/app/lista-cidades-santa-catarina";
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"],
+  selector: "app-santa-catarina",
+  templateUrl: "./santa-catarina.component.html",
+  styleUrls: ["./santa-catarina.component.css"],
 })
-export class AppComponent implements OnInit {
+export class SantaCatarinaComponent implements OnInit {
   @ViewChild(MatMenuTrigger, { static: false }) menu: MatMenuTrigger;
   @ViewChildren("path") path: QueryList<any>;
 
@@ -167,7 +168,19 @@ export class AppComponent implements OnInit {
     this.pathList.forEach((item) => (item.selecionado = false));
   }
 
-  openDialog(): void {}
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+      width: "250px",
+      data: { nome: "" },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result == -1) {
+        return;
+      }
+      this.itemSelecionado.nome = result;
+    });
+  }
 
   buscarNomeCidades() {
     this.pathList.forEach((item) => {
@@ -181,5 +194,24 @@ export class AppComponent implements OnInit {
     return this.http.get(
       "https://servicodados.ibge.gov.br/api/v1/localidades/municipios/" + codigo
     );
+  }
+}
+
+@Component({
+  selector: "dialog-overview-example-dialog",
+  templateUrl: "dialog-overview-example-dialog.html",
+})
+export class DialogOverviewExampleDialog {
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) {}
+
+  confirm(data): void {
+    this.dialogRef.close(data);
+  }
+
+  cancel() {
+    this.dialogRef.close(-1);
   }
 }
