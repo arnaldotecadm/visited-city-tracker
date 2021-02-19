@@ -5,7 +5,6 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { MapasModule } from "./mapas/mapas.module";
-import { MapaModule } from "./testes/mapa/mapa.module";
 
 @NgModule({
   declarations: [AppComponent],
@@ -13,7 +12,6 @@ import { MapaModule } from "./testes/mapa/mapa.module";
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MapaModule,
     HttpClientModule,
     MapasModule,
   ],

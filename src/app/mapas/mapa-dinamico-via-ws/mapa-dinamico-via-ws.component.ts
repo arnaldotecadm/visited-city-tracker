@@ -2,11 +2,11 @@ import { Component, OnInit } from "@angular/core";
 import { geoMercator, geoPath, json, select } from "d3";
 
 @Component({
-  selector: "app-mapa",
-  templateUrl: "./mapa.component.html",
-  styleUrls: ["./mapa.component.css"],
+  selector: "app-mapa-dinamico-via-ws",
+  templateUrl: "./mapa-dinamico-via-ws.component.html",
+  styleUrls: ["./mapa-dinamico-via-ws.component.css"],
 })
-export class MapaComponent implements OnInit {
+export class MapaDinamicoViaWsComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
