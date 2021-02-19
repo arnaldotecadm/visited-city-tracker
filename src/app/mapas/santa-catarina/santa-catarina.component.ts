@@ -3,23 +3,22 @@ import { HttpClient } from "@angular/common/http";
 import {
   Component,
   HostListener,
-  Inject,
   OnInit,
   QueryList,
   ViewChild,
   ViewChildren,
 } from "@angular/core";
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from "@angular/material/dialog";
+import { MatDialog } from "@angular/material/dialog";
 import { MatAccordion } from "@angular/material/expansion";
 import { MatMenuTrigger } from "@angular/material/menu";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { DialogData } from "src/app/app.component";
 import { ListaPathCidadeSantaCatarina } from "src/app/lista-cidades-santa-catarina";
+
+export interface DialogData {
+  animal: string;
+  nome: string;
+}
 
 @Component({
   selector: "app-santa-catarina",
@@ -168,20 +167,6 @@ export class SantaCatarinaComponent implements OnInit {
     this.pathList.forEach((item) => (item.selecionado = false));
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-      width: "250px",
-      data: { nome: "" },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result == -1) {
-        return;
-      }
-      this.itemSelecionado.nome = result;
-    });
-  }
-
   buscarNomeCidades() {
     this.pathList.forEach((item) => {
       this.consultaWebService(item.id).subscribe((data: any) => {
@@ -194,24 +179,5 @@ export class SantaCatarinaComponent implements OnInit {
     return this.http.get(
       "https://servicodados.ibge.gov.br/api/v1/localidades/municipios/" + codigo
     );
-  }
-}
-
-@Component({
-  selector: "dialog-overview-example-dialog",
-  templateUrl: "dialog-overview-example-dialog.html",
-})
-export class DialogOverviewExampleDialog {
-  constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
-  ) {}
-
-  confirm(data): void {
-    this.dialogRef.close(data);
-  }
-
-  cancel() {
-    this.dialogRef.close(-1);
   }
 }

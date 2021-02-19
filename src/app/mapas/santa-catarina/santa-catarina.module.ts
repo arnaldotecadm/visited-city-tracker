@@ -11,13 +11,10 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatTableModule } from "@angular/material/table";
-import {
-  DialogOverviewExampleDialog,
-  SantaCatarinaComponent,
-} from "./santa-catarina.component";
+import { SantaCatarinaComponent } from "./santa-catarina.component";
 
 @NgModule({
-  declarations: [SantaCatarinaComponent, DialogOverviewExampleDialog],
+  declarations: [SantaCatarinaComponent],
   imports: [
     CommonModule,
 
@@ -34,6 +31,5 @@ import {
     MatExpansionModule,
   ],
   exports: [SantaCatarinaComponent],
-  entryComponents: [DialogOverviewExampleDialog],
 })
 export class SantaCatarinaModule {}
