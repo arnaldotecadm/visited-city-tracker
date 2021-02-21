@@ -1,5 +1,5 @@
 export class ListaPathCidadeSantaCatarina {
-  public pathList = [
+  public santaCatarinacityList = [
     {
       id: "4200051",
       stroke: "#bdc3c7",

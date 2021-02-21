@@ -1,24 +1,10 @@
 import { Platform } from "@angular/cdk/platform";
-import { HttpClient } from "@angular/common/http";
-import {
-  Component,
-  HostListener,
-  OnInit,
-  QueryList,
-  ViewChild,
-  ViewChildren,
-} from "@angular/core";
+import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatAccordion } from "@angular/material/expansion";
-import { MatMenuTrigger } from "@angular/material/menu";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { ListaPathCidadeSantaCatarina } from "src/app/lista-cidades-santa-catarina";
-
-export interface DialogData {
-  animal: string;
-  nome: string;
-}
+import { MapaServiceService } from "../mapa-service.service";
 
 @Component({
   selector: "app-santa-catarina",
@@ -26,50 +12,45 @@ export interface DialogData {
   styleUrls: ["./santa-catarina.component.css"],
 })
 export class SantaCatarinaComponent implements OnInit {
-  @ViewChild(MatMenuTrigger, { static: false }) menu: MatMenuTrigger;
-  @ViewChildren("path") path: QueryList<any>;
+  @ViewChild(MatAccordion) accordion: MatAccordion;
+  @ViewChild(MatSort) sort: MatSort;
 
   ultimoItemSelecionado;
   itemSelecionado;
   cidadeVisitadaLista = [];
   dataSource;
-  @ViewChild(MatSort) sort: MatSort;
-  animal: string;
-  name: string;
-  menuX: number = 0;
-  menuY: number = 0;
-  title = "track-visited-city";
+
   selectedItem;
   visitedCityList = [];
   cidadesNomeadas = [];
-  totalCidades = 295;
-  modoDesenv = false;
   pathList = [];
   lastClick = 0;
   displayedColumns: string[] = ["nome"];
   selected;
-  @ViewChild(MatAccordion) accordion: MatAccordion;
 
   constructor(
     public dialog: MatDialog,
-    public http: HttpClient,
-    public platform: Platform
+    public platform: Platform,
+    private mapaService: MapaServiceService
   ) {
-    let listaPath = new ListaPathCidadeSantaCatarina();
-    this.pathList = listaPath.pathList;
     console.log(platform.ANDROID || platform.IOS);
   }
 
   ngOnInit() {
-    this.buscarNomeCidades();
-    if (localStorage.getItem("cidades_visitadas")) {
-      this.cidadeVisitadaLista.push(
-        ...JSON.parse(localStorage.getItem("cidades_visitadas"))
-      );
-    }
-    this.dataSource = new MatTableDataSource(this.cidadeVisitadaLista);
-    this.dataSource.sort = this.sort;
-    this.preecherCidadesVisitadasStorage();
+    this.mapaService.getAllCitySantaCatarina().subscribe((data) => {
+      this.pathList = data;
+      this.buscarNomeCidades();
+      this.loadVisitedCityList();
+      this.marcarCidadesVisitadasStorage();
+    });
+  }
+
+  loadVisitedCityList() {
+    this.mapaService.getVisitedCityByState().subscribe((data) => {
+      this.cidadeVisitadaLista.push(...data);
+      this.dataSource = new MatTableDataSource(this.cidadeVisitadaLista);
+      this.dataSource.sort = this.sort;
+    });
   }
 
   toggleSelecItemtable(item) {
@@ -95,7 +76,7 @@ export class SantaCatarinaComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.cidadeVisitadaLista);
   }
 
-  preecherCidadesVisitadasStorage() {
+  marcarCidadesVisitadasStorage() {
     this.cidadeVisitadaLista.forEach((item) => {
       let city = this.pathList.filter((pl) => pl.id == item.id)[0];
       if (city) {
@@ -169,15 +150,9 @@ export class SantaCatarinaComponent implements OnInit {
 
   buscarNomeCidades() {
     this.pathList.forEach((item) => {
-      this.consultaWebService(item.id).subscribe((data: any) => {
+      this.mapaService.getCityInfoByCode(item.id).subscribe((data: any) => {
         item.nome = data.nome;
       });
     });
-  }
-
-  consultaWebService(codigo) {
-    return this.http.get(
-      "https://servicodados.ibge.gov.br/api/v1/localidades/municipios/" + codigo
-    );
   }
 }
