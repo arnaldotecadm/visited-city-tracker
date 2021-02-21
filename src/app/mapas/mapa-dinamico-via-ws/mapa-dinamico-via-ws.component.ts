@@ -17,18 +17,18 @@ export class MapaDinamicoViaWsComponent implements OnInit {
   }
 
   //         min-x,   min-y,  width             height
-  viewbox = "-50.9904 -5.2718 30.58069999999999 35.015699999999995";
+  viewbox = "-185.9904 70.2718 30.58069999999999 35.015699999999995";
   draw(svg) {
-    const projection = geoMercator().scale(40000);
+    const projection = geoMercator().scale(200000);
     projection.reflectY();
     const pathGenerator = geoPath().projection(projection);
 
     json(
-      "https://servicodados.ibge.gov.br/api/v3/malhas/paises/BR?intrarregiao=regiao&formato=application/json"
+      "https://servicodados.ibge.gov.br/api/v3/malhas/estados/35?qualidade=minima&intrarregiao=municipio&formato=application/json"
     ).then((data: any) => {
       let dados;
       dados = data;
-      dados = topojson.feature(data, data.objects["BRGR"]);
+      dados = topojson.feature(data, data.objects["UF35MU"]);
       console.log(dados);
 
       //svg.attr()
