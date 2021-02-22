@@ -47,4 +47,37 @@ export class MapaDinamicoViaWsComponent implements OnInit {
         .attr("d", pathGenerator);
     });
   }
+
+  //Medidas abaixo para o mapa do brasil
+  // //         min-x,   min-y,  width             height
+  // viewbox = "-50.9904 -5.2718 30.58069999999999 35.015699999999995";
+  // draw(svg) {
+  //   const projection = geoMercator().scale(40000);
+  //   projection.reflectY();
+  //   const pathGenerator = geoPath().projection(projection);
+
+  //   json(
+  //     "https://servicodados.ibge.gov.br/api/v3/malhas/paises/BR?intrarregiao=regiao&formato=application/json"
+  //   ).then((data: any) => {
+  //     let dados;
+  //     dados = data;
+  //     dados = topojson.feature(data, data.objects["BRGR"]);
+  //     console.log(dados);
+
+  //     //svg.attr()
+
+  //     const gMap = svg.append("g");
+  //     gMap
+  //       .attr("transform", "scale(0.001,0.001)")
+  //       .selectAll("path")
+  //       .data(dados.features)
+  //       .enter()
+  //       .append("path")
+  //       .attr("class", "country")
+  //       .attr("stroke", "#aaa")
+  //       .attr("stroke-width", "20")
+  //       .attr("fill", "#000")
+  //       .attr("d", pathGenerator);
+  //   });
+  // }
 }

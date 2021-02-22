@@ -5,6 +5,8 @@
 export const environment = {
   production: false,
   CIDADES_WS: "https://servicodados.ibge.gov.br/api/v1/localidades/municipios/",
+  ESTADOS_WS: "https://servicodados.ibge.gov.br/api/v1/localidades/estados/",
+  URL_BASE_SERVICO_DADOS: "https://servicodados.ibge.gov.br/api/",
 };
 
 /*

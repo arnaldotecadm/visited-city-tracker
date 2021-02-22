@@ -4,7 +4,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatAccordion } from "@angular/material/expansion";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { MapaServiceService } from "../mapa-service.service";
+import { MapaService } from "../mapa-service.service";
 
 @Component({
   selector: "app-santa-catarina",
@@ -31,7 +31,7 @@ export class SantaCatarinaComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public platform: Platform,
-    private mapaService: MapaServiceService
+    private mapaService: MapaService
   ) {
     console.log(platform.ANDROID || platform.IOS);
   }

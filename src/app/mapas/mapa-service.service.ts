@@ -5,11 +5,12 @@ import { environment } from "../../environments/environment";
 import { ListaPathCidadeSantaCatarina } from "../lista-cidades-santa-catarina";
 
 const CIDADES_WS_BASE = environment.CIDADES_WS;
+const URL_SERVICO_DADOS = environment.URL_BASE_SERVICO_DADOS;
 
 @Injectable({
   providedIn: "root",
 })
-export class MapaServiceService {
+export class MapaService {
   constructor(public http: HttpClient) {}
 
   getCityInfoByCode(codigo) {
@@ -28,5 +29,18 @@ export class MapaServiceService {
     }
 
     return of(cityList);
+  }
+
+  getMapaBrasil() {
+    return this.http.get(
+      URL_SERVICO_DADOS +
+        "v3/malhas/paises/BR?intrarregiao=UF&formato=application/json"
+    );
+  }
+
+  getEstadoByCodigoArea(codarea) {
+    return this.http.get(
+      URL_SERVICO_DADOS + "v1/localidades/estados/" + codarea
+    );
   }
 }
