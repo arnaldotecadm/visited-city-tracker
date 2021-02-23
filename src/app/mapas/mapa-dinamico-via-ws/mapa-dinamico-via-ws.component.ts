@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from "@angular/core";
+import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { geoMercator, geoPath, select, selectAll } from "d3";
 import * as topojson from "topojson-client";
@@ -11,8 +12,13 @@ import { MapaService } from "../mapa-service.service";
 })
 export class MapaDinamicoViaWsComponent implements OnInit {
   codArea;
-
   viewbox;
+
+  lastClick = 0;
+  ultimoItemSelecionado;
+  itemSelecionado;
+  cidadeVisitadaLista = [];
+  dataSource;
 
   constructor(private route: ActivatedRoute, private mapService: MapaService) {
     this.codArea = +this.route.snapshot.paramMap.get("codarea");
@@ -32,7 +38,51 @@ export class MapaDinamicoViaWsComponent implements OnInit {
       return;
     }
 
-    event.target.setAttribute("fill", "#000");
+    this.itemSelecionado = event.target;
+
+    const currentTime = new Date().getTime();
+    const ultimoClick = currentTime - this.lastClick;
+
+    if (ultimoClick < 300) {
+      event.stopPropagation();
+      this.marcarComoVisitado(this.ultimoItemSelecionado);
+    }
+
+    this.lastClick = currentTime;
+  }
+
+  marcarComoVisitado(item = null) {
+    if (item) {
+      this.itemSelecionado = item;
+    }
+
+    if (
+      this.cidadeVisitadaLista.length > 0 &&
+      this.cidadeVisitadaLista.filter(
+        (i) => i.getAttribute("id") == this.itemSelecionado.getAttribute("id")
+      ).length > 0
+    ) {
+      let index = this.cidadeVisitadaLista.indexOf(this.itemSelecionado);
+      this.itemSelecionado.setAttribute("fill", "#FFF");
+      this.cidadeVisitadaLista.splice(index, 1);
+    } else {
+      this.cidadeVisitadaLista.push(this.itemSelecionado);
+      this.itemSelecionado.setAttribute("fill", this.getRandomColor());
+    }
+    // localStorage.setItem(
+    //   "cidades_visitadas",
+    //   JSON.stringify(this.cidadeVisitadaLista)
+    // );
+    this.dataSource = new MatTableDataSource(this.cidadeVisitadaLista);
+  }
+
+  getRandomColor(): string {
+    const randomBetween = (min, max) =>
+      min + Math.floor(Math.random() * (max - min + 1));
+    const r = randomBetween(0, 255);
+    const g = randomBetween(0, 255);
+    const b = randomBetween(0, 255);
+    return `rgb(${r},${g},${b})`;
   }
 
   getViewBox() {
