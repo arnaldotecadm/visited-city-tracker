@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { geoMercator, geoPath, select, selectAll } from "d3";
 import * as topojson from "topojson-client";
 import { MapaService } from "../mapa-service.service";
@@ -9,7 +10,7 @@ import { MapaService } from "../mapa-service.service";
   styleUrls: ["./mapa-do-brasil.component.css"],
 })
 export class MapaDoBrasilComponent implements OnInit {
-  constructor(private mapService: MapaService) {}
+  constructor(private mapService: MapaService, private router: Router) {}
 
   ngOnInit(): void {
     let svg = select("svg");
@@ -23,6 +24,7 @@ export class MapaDoBrasilComponent implements OnInit {
       return;
     }
     console.log(event.target.id);
+    this.router.navigate(["geral", { codarea: event.target.id }]);
   }
 
   //         min-x,   min-y,  width             height
