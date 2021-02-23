@@ -38,9 +38,24 @@ export class MapaService {
     );
   }
 
+  getListEstadosByCodArea(codArea) {
+    return this.http.get(
+      URL_SERVICO_DADOS +
+        "v3/malhas/estados/" +
+        codArea +
+        "?qualidade=minima&intrarregiao=municipio&formato=application/json"
+    );
+  }
+
   getEstadoByCodigoArea(codarea) {
     return this.http.get(
       URL_SERVICO_DADOS + "v1/localidades/estados/" + codarea
+    );
+  }
+
+  getMunicipioByCodigoArea(codarea) {
+    return this.http.get(
+      URL_SERVICO_DADOS + "v1/localidades/municipios/" + codarea
     );
   }
 }

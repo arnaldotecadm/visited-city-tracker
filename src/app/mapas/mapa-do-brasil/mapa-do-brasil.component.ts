@@ -23,8 +23,12 @@ export class MapaDoBrasilComponent implements OnInit {
     if (event.target.nodeName != "path") {
       return;
     }
-    console.log(event.target.id);
-    this.router.navigate(["geral", { codarea: event.target.id }]);
+
+    if (+event.target.id == 42) {
+      this.router.navigate(["santa-catarina"]);
+    } else {
+      this.router.navigate(["geral", { codarea: event.target.id }]);
+    }
   }
 
   //         min-x,   min-y,  width             height
