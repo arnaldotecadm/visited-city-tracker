@@ -18,6 +18,7 @@ export class MapaDinamicoViaWsComponent implements OnInit {
   ultimoItemSelecionado;
   itemSelecionado;
   cidadeVisitadaLista = [];
+  pathList = [];
   dataSource;
 
   constructor(private route: ActivatedRoute, private mapService: MapaService) {
@@ -46,9 +47,37 @@ export class MapaDinamicoViaWsComponent implements OnInit {
     if (ultimoClick < 300) {
       event.stopPropagation();
       this.marcarComoVisitado(this.ultimoItemSelecionado);
+    } else {
+      this.itemClicado(this.itemSelecionado);
     }
 
     this.lastClick = currentTime;
+  }
+
+  itemClicado(item) {
+    if (item && !!!item.selecionado) {
+      this.limparItensSelecionados();
+      item.setAttribute("selecionado", "true");
+    } else {
+      item.em.setAttribute("selecionado", "false");
+    }
+
+    item.setAttribute(
+      "fill",
+      item.getAttribute("selecionado") ? "#A9A9A9" : "#FFF"
+    );
+    this.ultimoItemSelecionado = item;
+  }
+
+  limparItensSelecionados() {
+    this.pathList = selectAll("path").nodes();
+    selectAll("path")
+      .nodes()
+      .filter((n: Element) => !!!n.getAttribute("visitado"))
+      .forEach((item: Element) => {
+        item.setAttribute("fill", "#FFF");
+        item.setAttribute("selecionado", "false");
+      });
   }
 
   marcarComoVisitado(item = null) {
@@ -64,10 +93,12 @@ export class MapaDinamicoViaWsComponent implements OnInit {
     ) {
       let index = this.cidadeVisitadaLista.indexOf(this.itemSelecionado);
       this.itemSelecionado.setAttribute("fill", "#FFF");
+      this.itemSelecionado.setAttribute("visitado", "false");
       this.cidadeVisitadaLista.splice(index, 1);
     } else {
       this.cidadeVisitadaLista.push(this.itemSelecionado);
       this.itemSelecionado.setAttribute("fill", this.getRandomColor());
+      this.itemSelecionado.setAttribute("visitado", "true");
     }
     // localStorage.setItem(
     //   "cidades_visitadas",
@@ -137,6 +168,7 @@ export class MapaDinamicoViaWsComponent implements OnInit {
   }
 
   fullfillStateName() {
+    this.pathList = selectAll("path").nodes();
     selectAll("path")
       .nodes()
       .forEach((item: Element) => {
