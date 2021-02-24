@@ -73,7 +73,6 @@ export class MapaDinamicoViaWsComponent implements OnInit {
     this.pathList = selectAll("path").nodes();
     selectAll("path")
       .nodes()
-      //.filter((n: Element) => !!!n.getAttribute("visitado"))
       .forEach((item: Element) => {
         let itemCor = item.getAttribute("cor");
         item.setAttribute("fill", itemCor ? itemCor : "#FFF");
