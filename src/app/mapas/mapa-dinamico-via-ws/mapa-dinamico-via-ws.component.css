@@ -34,6 +34,8 @@
   border-radius: 15px;
   width: 550px;
   margin-top: 3px;
+  position: sticky;
+  top: 35px;
 }
 
 .cabecalho-head {

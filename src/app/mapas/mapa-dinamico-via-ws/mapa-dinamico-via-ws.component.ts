@@ -25,12 +25,46 @@ export class MapaDinamicoViaWsComponent implements OnInit {
     this.codArea = +this.route.snapshot.paramMap.get("codarea");
   }
 
+  get cidadeSelecionada(): string {
+    let nomeSelecao = "";
+
+    if (this.itemSelecionado) {
+      if (this.itemSelecionado.nome) {
+        nomeSelecao =
+          this.itemSelecionado.nome + " - " + this.itemSelecionado.id;
+      } else {
+        nomeSelecao = "Cidade selecionada: " + this.itemSelecionado.id;
+      }
+    }
+
+    return nomeSelecao;
+  }
+
   ngOnInit(): void {
     this.viewbox = this.getViewBox();
 
     let svg = select("svg");
 
     this.draw(svg);
+  }
+
+  loadVisitedCityList() {
+    this.mapService.getVisitedCityByState().subscribe((data) => {
+      this.cidadeVisitadaLista.push(...data);
+      this.dataSource = new MatTableDataSource(this.cidadeVisitadaLista);
+      this.marcarCidadesVisitadasStorage();
+    });
+  }
+
+  marcarCidadesVisitadasStorage() {
+    this.cidadeVisitadaLista.forEach((item) => {
+      let city = this.pathList.filter((pl) => pl.id == item.id)[0];
+      if (city) {
+        city.setAttribute("fill", this.getRandomColor());
+        city.setAttribute("cor", city.getAttribute("fill"));
+        city.setAttribute("visitado", "true");
+      }
+    });
   }
 
   @HostListener("click", ["$event"])
@@ -85,19 +119,24 @@ export class MapaDinamicoViaWsComponent implements OnInit {
       this.itemSelecionado = item;
     }
 
+    let cidade = {
+      id: this.itemSelecionado.id,
+      nome: this.itemSelecionado.nome,
+    };
+
     if (
       this.cidadeVisitadaLista.length > 0 &&
       this.cidadeVisitadaLista.filter(
-        (i) => i.getAttribute("id") == this.itemSelecionado.getAttribute("id")
+        (i) => i.codArea == this.itemSelecionado.getAttribute("id")
       ).length > 0
     ) {
-      let index = this.cidadeVisitadaLista.indexOf(this.itemSelecionado);
+      let index = this.cidadeVisitadaLista.indexOf(cidade);
       this.itemSelecionado.setAttribute("fill", "#FFF");
       this.itemSelecionado.setAttribute("cor", "#FFF");
       this.itemSelecionado.setAttribute("visitado", "false");
       this.cidadeVisitadaLista.splice(index, 1);
     } else {
-      this.cidadeVisitadaLista.push(this.itemSelecionado);
+      this.cidadeVisitadaLista.push(cidade);
       this.itemSelecionado.setAttribute("fill", this.getRandomColor());
       this.itemSelecionado.setAttribute(
         "cor",
@@ -105,10 +144,11 @@ export class MapaDinamicoViaWsComponent implements OnInit {
       );
       this.itemSelecionado.setAttribute("visitado", "true");
     }
-    // localStorage.setItem(
-    //   "cidades_visitadas",
-    //   JSON.stringify(this.cidadeVisitadaLista)
-    // );
+
+    localStorage.setItem(
+      "cidades_visitadas",
+      JSON.stringify(this.cidadeVisitadaLista)
+    );
     this.dataSource = new MatTableDataSource(this.cidadeVisitadaLista);
   }
 
@@ -174,6 +214,7 @@ export class MapaDinamicoViaWsComponent implements OnInit {
 
   fullfillStateName() {
     this.pathList = selectAll("path").nodes();
+
     selectAll("path")
       .nodes()
       .forEach((item: Element) => {
@@ -185,6 +226,8 @@ export class MapaDinamicoViaWsComponent implements OnInit {
             item.childNodes[0].textContent = codArea + " - " + data.nome;
           });
       });
+
+    this.loadVisitedCityList();
   }
 
   getCodigoArea(obj) {

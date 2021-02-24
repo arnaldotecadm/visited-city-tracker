@@ -31,6 +31,13 @@ export class MapaService {
     return of(cityList);
   }
 
+  toggleCidadeVisitada(item) {
+    // localStorage.setItem(
+    //   "cidades_visitadas",
+    //   JSON.stringify(this.cidadeVisitadaLista)
+    // );
+  }
+
   getMapaBrasil() {
     return this.http.get(
       URL_SERVICO_DADOS +
