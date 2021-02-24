@@ -55,8 +55,8 @@ export class MapaDinamicoViaWsComponent implements OnInit {
   }
 
   itemClicado(item) {
+    this.limparItensSelecionados();
     if (item && !!!item.selecionado) {
-      this.limparItensSelecionados();
       item.setAttribute("selecionado", "true");
     } else {
       item.em.setAttribute("selecionado", "false");
@@ -73,9 +73,10 @@ export class MapaDinamicoViaWsComponent implements OnInit {
     this.pathList = selectAll("path").nodes();
     selectAll("path")
       .nodes()
-      .filter((n: Element) => !!!n.getAttribute("visitado"))
+      //.filter((n: Element) => !!!n.getAttribute("visitado"))
       .forEach((item: Element) => {
-        item.setAttribute("fill", "#FFF");
+        let itemCor = item.getAttribute("cor");
+        item.setAttribute("fill", itemCor ? itemCor : "#FFF");
         item.setAttribute("selecionado", "false");
       });
   }
@@ -93,11 +94,16 @@ export class MapaDinamicoViaWsComponent implements OnInit {
     ) {
       let index = this.cidadeVisitadaLista.indexOf(this.itemSelecionado);
       this.itemSelecionado.setAttribute("fill", "#FFF");
+      this.itemSelecionado.setAttribute("cor", "#FFF");
       this.itemSelecionado.setAttribute("visitado", "false");
       this.cidadeVisitadaLista.splice(index, 1);
     } else {
       this.cidadeVisitadaLista.push(this.itemSelecionado);
       this.itemSelecionado.setAttribute("fill", this.getRandomColor());
+      this.itemSelecionado.setAttribute(
+        "cor",
+        this.itemSelecionado.getAttribute("fill")
+      );
       this.itemSelecionado.setAttribute("visitado", "true");
     }
     // localStorage.setItem(
