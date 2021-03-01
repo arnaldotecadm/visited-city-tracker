@@ -1,3 +1,7 @@
+svg {
+  pointer-events: all;
+}
+
 .label_progressbar {
   color: white;
   position: fixed;
@@ -11,15 +15,50 @@
   padding: 3px;
   width: 99%;
   margin-top: 3px;
-  position: fixed;
-  top: 0px;
-  left: 0.5%;
 }
 
 .progressbar > div {
   background-color: orange;
   height: 20px;
   border-radius: 10px;
+}
+
+.mapa_desenhado {
+  width: 80%;
+}
+.lista-cidades {
+  width: 15%;
+  background-color: #302dec73;
+  border-radius: 10px;
+  padding: 10px;
+  right: 1%;
+  top: 5%;
+  float: right;
+  margin-right: 1%;
+}
+
+tr.linha-coluna:not(.selected):hover {
+  background: whitesmoke;
+}
+
+.lista-cidades .head {
+  margin-bottom: 5%;
+}
+
+.lista-cidades .body {
+  overflow: auto;
+  height: 450px;
+}
+.lista-cidades .body table {
+  margin-right: 0px;
+  width: 100%;
+}
+
+.one-line {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
 }
 
 .centered {
@@ -34,12 +73,72 @@
   border-radius: 15px;
   width: 550px;
   margin-top: 3px;
-  position: sticky;
+}
+
+.limpar_cidades_visitadas {
+  float: right;
+  width: 15%;
+  margin-top: 3px;
+}
+
+.acoes_cidades {
+  position: absolute;
+  left: 1%;
   top: 35px;
+  width: 400px;
 }
 
 .cabecalho-head {
   font-weight: 500;
   font-size: 25px;
   text-align: center;
+}
+
+.titulo-menu-acoes {
+  background-color: white;
+  padding: 10px;
+  color: blue;
+  font-weight: 600;
+  font-size: 21px;
+}
+
+.example-action-buttons button {
+  width: 100%;
+  text-align: start;
+}
+
+.example-action-buttons button span {
+  margin-left: 1%;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+}
+
+.selected {
+  background-color: #9192f0;
+}
+
+.example-action-buttons {
+  padding-bottom: 20px;
+}
+
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.example-headers-align .mat-form-field + .mat-form-field {
+  margin-left: 8px;
 }

@@ -21,13 +21,14 @@ export class MapaService {
     return of(new ListaPathCidadeSantaCatarina().santaCatarinacityList);
   }
 
-  getVisitedCityByState() {
+  getVisitedCityByState(codArea) {
     let cityList = [];
 
-    if (localStorage.getItem("cidades_visitadas")) {
-      cityList.push(...JSON.parse(localStorage.getItem("cidades_visitadas")));
+    if (localStorage.getItem("cidades_visitadas_" + codArea)) {
+      cityList.push(
+        ...JSON.parse(localStorage.getItem("cidades_visitadas_" + codArea))
+      );
     }
-
     return of(cityList);
   }
 

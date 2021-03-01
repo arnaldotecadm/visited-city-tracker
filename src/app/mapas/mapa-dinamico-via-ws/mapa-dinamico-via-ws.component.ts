@@ -19,7 +19,9 @@ export class MapaDinamicoViaWsComponent implements OnInit {
   itemSelecionado;
   cidadeVisitadaLista = [];
   pathList = [];
+  displayedColumns: string[] = ["nome"];
   dataSource;
+  selected;
 
   constructor(private route: ActivatedRoute, private mapService: MapaService) {
     this.codArea = +this.route.snapshot.paramMap.get("codarea");
@@ -49,9 +51,11 @@ export class MapaDinamicoViaWsComponent implements OnInit {
   }
 
   loadVisitedCityList() {
-    this.mapService.getVisitedCityByState().subscribe((data) => {
+    this.mapService.getVisitedCityByState(this.codArea).subscribe((data) => {
       this.cidadeVisitadaLista.push(...data);
       this.dataSource = new MatTableDataSource(this.cidadeVisitadaLista);
+      console.log(this.cidadeVisitadaLista);
+
       this.marcarCidadesVisitadasStorage();
     });
   }
@@ -121,13 +125,14 @@ export class MapaDinamicoViaWsComponent implements OnInit {
 
     let cidade = {
       id: this.itemSelecionado.id,
-      nome: this.itemSelecionado.nome,
+      codArea: this.codArea,
+      nome: this.itemSelecionado.getAttribute("nome"),
     };
 
     if (
       this.cidadeVisitadaLista.length > 0 &&
       this.cidadeVisitadaLista.filter(
-        (i) => i.codArea == this.itemSelecionado.getAttribute("id")
+        (i) => i.id == this.itemSelecionado.getAttribute("id")
       ).length > 0
     ) {
       let index = this.cidadeVisitadaLista.indexOf(cidade);
@@ -146,7 +151,7 @@ export class MapaDinamicoViaWsComponent implements OnInit {
     }
 
     localStorage.setItem(
-      "cidades_visitadas",
+      "cidades_visitadas_" + this.codArea,
       JSON.stringify(this.cidadeVisitadaLista)
     );
     this.dataSource = new MatTableDataSource(this.cidadeVisitadaLista);
@@ -266,6 +271,7 @@ export class MapaDinamicoViaWsComponent implements OnInit {
           .getMunicipioByCodigoArea(codArea)
           .subscribe((data: any) => {
             item.childNodes[0].textContent = codArea + " - " + data.nome;
+            item.setAttribute("nome", data.nome);
           });
       });
 
@@ -274,5 +280,13 @@ export class MapaDinamicoViaWsComponent implements OnInit {
 
   getCodigoArea(obj) {
     return obj.properties.codarea;
+  }
+
+  toggleSelecItemtable(item) {
+    if (this.selected && item.id == this.selected.id) {
+      this.selected = null;
+    } else {
+      this.selected = item;
+    }
   }
 }

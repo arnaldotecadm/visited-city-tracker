@@ -46,7 +46,7 @@ export class SantaCatarinaComponent implements OnInit {
   }
 
   loadVisitedCityList() {
-    this.mapaService.getVisitedCityByState().subscribe((data) => {
+    this.mapaService.getVisitedCityByState(42).subscribe((data) => {
       this.cidadeVisitadaLista.push(...data);
       this.dataSource = new MatTableDataSource(this.cidadeVisitadaLista);
       this.dataSource.sort = this.sort;
