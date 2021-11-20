@@ -31,10 +31,8 @@ svg {
   background-color: #302dec73;
   border-radius: 10px;
   padding: 10px;
-  right: 1%;
-  top: 5%;
-  float: right;
-  margin-right: 1%;
+  position: absolute;
+  right: 0px;
 }
 
 tr.linha-coluna:not(.selected):hover {
@@ -157,4 +155,10 @@ tr.linha-coluna:not(.selected):hover {
   cursor: pointer;
   color: blue;
   text-decoration-line: underline;
+}
+
+.acoes {
+  width: 25%;
+  margin-left: 1%;
+  position: absolute;
 }

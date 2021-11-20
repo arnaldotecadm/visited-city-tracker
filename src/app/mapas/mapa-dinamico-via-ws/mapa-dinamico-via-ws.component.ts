@@ -37,14 +37,14 @@ export class MapaDinamicoViaWsComponent implements OnInit {
     let nomeSelecao = "";
 
     if (this.itemSelecionado) {
-      if (this.itemSelecionado.nome) {
+      if (this.itemSelecionado.getAttribute('nome')) {
         nomeSelecao =
-          this.itemSelecionado.nome + " - " + this.itemSelecionado.id;
+          this.itemSelecionado.getAttribute('nome') + " - " + this.itemSelecionado.id;
       } else {
-        nomeSelecao = "Cidade selecionada: " + this.itemSelecionado.id;
+        nomeSelecao = "Cidade Selecionada: " + this.itemSelecionado.id;
       }
     }
-
+    
     return nomeSelecao;
   }
 
