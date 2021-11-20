@@ -23,6 +23,8 @@ export class MapaDinamicoViaWsComponent implements OnInit {
   dataSource;
   selected;
 
+  estadoSelecionado;
+
   constructor(
     private route: ActivatedRoute,
     private mapService: MapaService,
@@ -47,6 +49,12 @@ export class MapaDinamicoViaWsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.mapService
+      .getEstadoByCodigoArea(this.codArea)
+      .subscribe((data: any) => {
+        this.estadoSelecionado = data.nome;
+      });
+
     this.viewbox = this.getViewBox();
 
     let svg = select("svg");
@@ -54,8 +62,8 @@ export class MapaDinamicoViaWsComponent implements OnInit {
     this.draw(svg);
   }
 
-  irParaMenuInicial(){
-    this.router.navigate(['brasil']);
+  irParaMenuInicial() {
+    this.router.navigate(["brasil"]);
   }
 
   loadVisitedCityList() {
