@@ -70,9 +70,17 @@
   ></div>
 </div>
 
-<div class="cabecalho centered">
-  <div class="cabecalho-head">
-    {{ cidadeSelecionada ? cidadeSelecionada : "Selecione uma cidade" }}
+<div class="menu-header">
+  <div class="cabecalho centered menu-inicial">
+    <div class="cabecalho-head" (click)="irParaMenuInicial()">
+      Voltar ao Menu Inicial
+    </div>
+  </div>
+
+  <div class="cabecalho centered" style="margin-left: 10%">
+    <div class="cabecalho-head">
+      {{ cidadeSelecionada ? cidadeSelecionada : "Selecione uma cidade" }}
+    </div>
   </div>
 </div>
 
