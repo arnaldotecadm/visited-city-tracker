@@ -146,12 +146,11 @@ tr.linha-coluna:not(.selected):hover {
 .menu-header {
   display: inline-flex;
   width: 100%;
+  margin-bottom: 5px;
 }
 
 .menu-inicial {
   width: 15%;
-  margin-right: 1%;
-  margin-left: 1%;
 }
 
 .menu-inicial:hover {
