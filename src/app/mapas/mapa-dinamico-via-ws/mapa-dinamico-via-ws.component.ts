@@ -23,7 +23,11 @@ export class MapaDinamicoViaWsComponent implements OnInit {
   dataSource;
   selected;
 
-  constructor(private route: ActivatedRoute, private mapService: MapaService) {
+  constructor(
+    private route: ActivatedRoute,
+    private mapService: MapaService,
+    private router: Router
+  ) {
     this.codArea = +this.route.snapshot.paramMap.get("codarea");
   }
 
@@ -50,12 +54,14 @@ export class MapaDinamicoViaWsComponent implements OnInit {
     this.draw(svg);
   }
 
+  irParaMenuInicial(){
+    this.router.navigate(['brasil']);
+  }
+
   loadVisitedCityList() {
     this.mapService.getVisitedCityByState(this.codArea).subscribe((data) => {
       this.cidadeVisitadaLista.push(...data);
       this.dataSource = new MatTableDataSource(this.cidadeVisitadaLista);
-      console.log(this.cidadeVisitadaLista);
-
       this.marcarCidadesVisitadasStorage();
     });
   }
