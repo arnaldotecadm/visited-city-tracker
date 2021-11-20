@@ -1,0 +1,24 @@
+.loading-icon {
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  top: 0px;
+  position: absolute !important;
+  background-color: #00000030;
+}
+
+.img-centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10%;
+}
+
+.load-message {
+  font-size: 48px;
+  padding: 10px;
+  line-height: normal;
+  text-align: center;
+  position: absolute;
+  bottom: 0px;
+}
