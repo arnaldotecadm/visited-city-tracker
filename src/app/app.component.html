@@ -1,1 +1,15 @@
 <router-outlet></router-outlet>
+
+<ng-container *ngIf="loadingService.isLoading$ | async">
+  <div class="loading-icon" style="z-index: 1001">
+    <img
+      [src]="'/assets/img/loading-buffering.gif'"
+      alt="Loading Icon"
+      class="img-centered"
+    />
+    <div class="load-message">
+      Estamos carregando todas as informações para que possa ter uma melhor
+      experiência.
+    </div>
+  </div>
+</ng-container>
